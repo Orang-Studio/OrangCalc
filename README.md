@@ -1,11 +1,8 @@
 <div align="center">
 
-# OrangCalc
+### OrangCalc
 A Simple Python Calculator Replacement  
 For Windows 11/10 64-bit operating systems
-<br>
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/c08e3e54cb47ffb2c905/maintainability)](https://codeclimate.com/github/adasjusk/OrangCalc/maintainability)
 <br><br>
 Here is a look at the calculator:
 <br>
