@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>OrangCalc</AssemblyName>
+    <RootNamespace>OrangCalc</RootNamespace>
+    <ApplicationIcon>..\orange.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>4.0.0</Version>
+    <Product>OrangCalc</Product>
+    <Company>Orang Studio</Company>
+    <Copyright>GPL-3.0</Copyright>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <NoWarn>CS0162;CS0168;CS0219;CS0414;CS0649;CS0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\orange.ico" Link="orange.ico" LogicalName="OrangCalc.orange.ico" />
+  </ItemGroup>
+</Project>

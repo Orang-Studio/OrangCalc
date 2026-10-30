@@ -1,18 +1,64 @@
 <div align="center">
 
-### OrangCalc
-A simple python calculator 
-for Linux only 64-bit operating systems<br>
-If you want old windows version of this calculator then [here](https://github.com/Orang-Studio/OrangCalc/releases/download/2.0/orangcalc.exe)<br>
-Here is a look at the calculator:
-<br>
+# OrangCalc
 
-![image](https://github.com/user-attachments/assets/6da15fc3-568d-4704-9bc0-d8c5e557237b)
-<br><br>
+**A dark, precise calculator for Windows and Linux** - arithmetic, symbolic algebra, units,
+currencies, plotting, data sets and a periodic table, all in one desktop app.
 
+![image](image.png)
 
-Latest Version: 3.0  
-Last Updated: 2026-04-02  
-Made with Love ❤️
+![Version](https://img.shields.io/badge/version-4.0-orange)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue)
+![.NET](https://img.shields.io/badge/.NET%20Framework-4.8-purple)
+
+Made with love ❤️
 
 </div>
+
+---
+
+## The maths
+
+- **340+ built-in functions** - trig & hyperbolics, number theory (gcd, primes, totient,
+  partitions, bell, fibonacci), combinatorics, statistics and distributions, special
+  functions (Gamma, Erf, Zeta, Bessel, Lambert W, Fresnel…)
+- **Matrices & vectors** - determinant, inverse, rank, rref, trace, eigenvalues,
+  linear-system solving
+- **Intervals & uncertainty** - propagation via `5±0.1` or `interval(4.9, 5.1)` with
+  multiple display modes
+- **Flexible display** - fractions, scientific/engineering notation, bases from binary
+  to sexagesimal, Roman numerals, BCD, and even exotic bases like π, e and golden ratio
+- **Flexible input** - hex/bin/octal, dates, fractions (½), uncertainty, complex and
+  polar forms, `where x=…` substitutions, `x := value` and `f(x) := expr` definitions
+
+## The interface
+
+- Nine pages: **Calculator, Functions, Variables, Units, Data Sets, Periodic Table,
+  Plot, Tools, Settings**
+- Dark theme with customizable accent color
+- Fully editable keypad with 4 tabs - including a **Custom tab** for your own buttons
+- Side panel with History, **RPN stack** and **Number bases**
+- Calculate-as-you-type, background abortable calculations, exact approximate toggle
+- Workspaces (`.ocws`) that bundle settings, definitions, history and RPN stack
+- All keyboard shortcuts rebindable
+
+| Shortcut                                      | Action                   |
+|-----------------------------------------------|--------------------------|
+| <kbd>Ctrl</kbd>+<kbd>E</kbd>                  | Toggle exact result      |
+| <kbd>Ctrl</kbd>+<kbd>R</kbd>                  | Toggle RPN mode          |
+| <kbd>Ctrl</kbd>+<kbd>P</kbd>                  | Plot                     |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> | Periodic table           |
+| <kbd>Ctrl</kbd>+<kbd>S</kbd>                  | Store result as variable |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Copy result              |
+| <kbd>F1</kbd>                                 | Built-in help            |
+
+## Download & run
+
+Grab the latest build from the [**Releases**](https://github.com/Orang-Studio/OrangCalc/releases) page
+(requires **Windows** with the **.NET Framework 4.8** runtime), or build it yourself:
+
+Linux will be soon!
+
+## License
+
+Released under the [**GNU GPL v3**](LICENSE) © Orang Studio.

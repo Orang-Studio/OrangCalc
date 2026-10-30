@@ -1,0 +1,294 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+
+namespace OrangCalc.Engine
+{
+    public static class Data
+    {
+        public static readonly string[] ElementClasses =
+        {
+            "", "Alkali Metal", "Alkaline Earth Metal", "Lanthanide", "Actinide", "Transition Metal",
+            "Post-transition Metal", "Metalloid", "Reactive Nonmetal", "Halogen", "Noble Gas", "Unknown Properties"
+        };
+
+        // number|symbol|name|class|group|period|weight|electronegativity|density g/cm3|melting K|boiling K|configuration|discovered|phase
+        static readonly string[] Elements =
+        {
+            "1|H|Hydrogen|8|1|1|1.008|2.20|0.00008988|13.99|20.271|1s1|1766|Gas",
+            "2|He|Helium|10|18|1|4.002602||0.0001785|0.95|4.222|1s2|1868|Gas",
+            "3|Li|Lithium|1|1|2|6.94|0.98|0.534|453.65|1603|[He] 2s1|1817|Solid",
+            "4|Be|Beryllium|2|2|2|9.0121831|1.57|1.85|1560|2742|[He] 2s2|1798|Solid",
+            "5|B|Boron|7|13|2|10.81|2.04|2.08|2349|4200|[He] 2s2 2p1|1808|Solid",
+            "6|C|Carbon|8|14|2|12.011|2.55|2.267||3915|[He] 2s2 2p2|Ancient|Solid",
+            "7|N|Nitrogen|8|15|2|14.007|3.04|0.0012506|63.15|77.355|[He] 2s2 2p3|1772|Gas",
+            "8|O|Oxygen|8|16|2|15.999|3.44|0.001429|54.36|90.188|[He] 2s2 2p4|1774|Gas",
+            "9|F|Fluorine|9|17|2|18.998403163|3.98|0.001696|53.48|85.03|[He] 2s2 2p5|1886|Gas",
+            "10|Ne|Neon|10|18|2|20.1797||0.0009002|24.56|27.104|[He] 2s2 2p6|1898|Gas",
+            "11|Na|Sodium|1|1|3|22.98976928|0.93|0.968|370.944|1156.09|[Ne] 3s1|1807|Solid",
+            "12|Mg|Magnesium|2|2|3|24.305|1.31|1.738|923|1363|[Ne] 3s2|1755|Solid",
+            "13|Al|Aluminium|6|13|3|26.9815384|1.61|2.70|933.47|2743|[Ne] 3s2 3p1|1825|Solid",
+            "14|Si|Silicon|7|14|3|28.085|1.90|2.3290|1687|3538|[Ne] 3s2 3p2|1823|Solid",
+            "15|P|Phosphorus|8|15|3|30.973761998|2.19|1.823|317.3|553.7|[Ne] 3s2 3p3|1669|Solid",
+            "16|S|Sulfur|8|16|3|32.06|2.58|2.07|388.36|717.8|[Ne] 3s2 3p4|Ancient|Solid",
+            "17|Cl|Chlorine|9|17|3|35.45|3.16|0.003214|171.6|239.11|[Ne] 3s2 3p5|1774|Gas",
+            "18|Ar|Argon|10|18|3|39.948||0.001784|83.81|87.302|[Ne] 3s2 3p6|1894|Gas",
+            "19|K|Potassium|1|1|4|39.0983|0.82|0.89|336.7|1032|[Ar] 4s1|1807|Solid",
+            "20|Ca|Calcium|2|2|4|40.078|1.00|1.55|1115|1757|[Ar] 4s2|1808|Solid",
+            "21|Sc|Scandium|5|3|4|44.955908|1.36|2.985|1814|3109|[Ar] 3d1 4s2|1879|Solid",
+            "22|Ti|Titanium|5|4|4|47.867|1.54|4.506|1941|3560|[Ar] 3d2 4s2|1791|Solid",
+            "23|V|Vanadium|5|5|4|50.9415|1.63|6.0|2183|3680|[Ar] 3d3 4s2|1801|Solid",
+            "24|Cr|Chromium|5|6|4|51.9961|1.66|7.19|2180|2944|[Ar] 3d5 4s1|1797|Solid",
+            "25|Mn|Manganese|5|7|4|54.938043|1.55|7.21|1519|2334|[Ar] 3d5 4s2|1774|Solid",
+            "26|Fe|Iron|5|8|4|55.845|1.83|7.874|1811|3134|[Ar] 3d6 4s2|Ancient|Solid",
+            "27|Co|Cobalt|5|9|4|58.933194|1.88|8.90|1768|3200|[Ar] 3d7 4s2|1735|Solid",
+            "28|Ni|Nickel|5|10|4|58.6934|1.91|8.908|1728|3003|[Ar] 3d8 4s2|1751|Solid",
+            "29|Cu|Copper|5|11|4|63.546|1.90|8.96|1357.77|2835|[Ar] 3d10 4s1|Ancient|Solid",
+            "30|Zn|Zinc|5|12|4|65.38|1.65|7.14|692.68|1180|[Ar] 3d10 4s2|1746|Solid",
+            "31|Ga|Gallium|6|13|4|69.723|1.81|5.91|302.9146|2673|[Ar] 3d10 4s2 4p1|1875|Solid",
+            "32|Ge|Germanium|7|14|4|72.630|2.01|5.323|1211.40|3106|[Ar] 3d10 4s2 4p2|1886|Solid",
+            "33|As|Arsenic|7|15|4|74.921595|2.18|5.727|1090|887|[Ar] 3d10 4s2 4p3|1250|Solid",
+            "34|Se|Selenium|8|16|4|78.971|2.55|4.81|494|958|[Ar] 3d10 4s2 4p4|1817|Solid",
+            "35|Br|Bromine|9|17|4|79.904|2.96|3.1028|265.8|332.0|[Ar] 3d10 4s2 4p5|1825|Liquid",
+            "36|Kr|Krypton|10|18|4|83.798|3.00|0.003749|115.78|119.93|[Ar] 3d10 4s2 4p6|1898|Gas",
+            "37|Rb|Rubidium|1|1|5|85.4678|0.82|1.532|312.45|961|[Kr] 5s1|1861|Solid",
+            "38|Sr|Strontium|2|2|5|87.62|0.95|2.64|1050|1650|[Kr] 5s2|1790|Solid",
+            "39|Y|Yttrium|5|3|5|88.90584|1.22|4.472|1799|3203|[Kr] 4d1 5s2|1794|Solid",
+            "40|Zr|Zirconium|5|4|5|91.224|1.33|6.52|2128|4650|[Kr] 4d2 5s2|1789|Solid",
+            "41|Nb|Niobium|5|5|5|92.90637|1.6|8.57|2750|5017|[Kr] 4d4 5s1|1801|Solid",
+            "42|Mo|Molybdenum|5|6|5|95.95|2.16|10.28|2896|4912|[Kr] 4d5 5s1|1778|Solid",
+            "43|Tc|Technetium|5|7|5|98|1.9|11|2430|4538|[Kr] 4d5 5s2|1937|Solid",
+            "44|Ru|Ruthenium|5|8|5|101.07|2.2|12.45|2607|4423|[Kr] 4d7 5s1|1844|Solid",
+            "45|Rh|Rhodium|5|9|5|102.90549|2.28|12.41|2237|3968|[Kr] 4d8 5s1|1804|Solid",
+            "46|Pd|Palladium|5|10|5|106.42|2.20|12.023|1828.05|3236|[Kr] 4d10|1802|Solid",
+            "47|Ag|Silver|5|11|5|107.8682|1.93|10.49|1234.93|2435|[Kr] 4d10 5s1|Ancient|Solid",
+            "48|Cd|Cadmium|5|12|5|112.414|1.69|8.65|594.22|1040|[Kr] 4d10 5s2|1817|Solid",
+            "49|In|Indium|6|13|5|114.818|1.78|7.31|429.7485|2345|[Kr] 4d10 5s2 5p1|1863|Solid",
+            "50|Sn|Tin|6|14|5|118.710|1.96|7.287|505.08|2875|[Kr] 4d10 5s2 5p2|Ancient|Solid",
+            "51|Sb|Antimony|7|15|5|121.760|2.05|6.697|903.78|1908|[Kr] 4d10 5s2 5p3|Ancient|Solid",
+            "52|Te|Tellurium|7|16|5|127.60|2.1|6.24|722.66|1261|[Kr] 4d10 5s2 5p4|1782|Solid",
+            "53|I|Iodine|9|17|5|126.90447|2.66|4.933|386.85|457.4|[Kr] 4d10 5s2 5p5|1811|Solid",
+            "54|Xe|Xenon|10|18|5|131.293|2.6|0.005894|161.40|165.051|[Kr] 4d10 5s2 5p6|1898|Gas",
+            "55|Cs|Caesium|1|1|6|132.90545196|0.79|1.93|301.7|944|[Xe] 6s1|1860|Solid",
+            "56|Ba|Barium|2|2|6|137.327|0.89|3.51|1000|2118|[Xe] 6s2|1772|Solid",
+            "57|La|Lanthanum|3|3|6|138.90547|1.10|6.162|1193|3737|[Xe] 5d1 6s2|1838|Solid",
+            "58|Ce|Cerium|3|0|6|140.116|1.12|6.770|1068|3716|[Xe] 4f1 5d1 6s2|1803|Solid",
+            "59|Pr|Praseodymium|3|0|6|140.90766|1.13|6.77|1208|3793|[Xe] 4f3 6s2|1885|Solid",
+            "60|Nd|Neodymium|3|0|6|144.242|1.14|7.01|1297|3347|[Xe] 4f4 6s2|1885|Solid",
+            "61|Pm|Promethium|3|0|6|145|1.13|7.26|1315|3273|[Xe] 4f5 6s2|1945|Solid",
+            "62|Sm|Samarium|3|0|6|150.36|1.17|7.52|1345|2173|[Xe] 4f6 6s2|1879|Solid",
+            "63|Eu|Europium|3|0|6|151.964|1.2|5.264|1099|1802|[Xe] 4f7 6s2|1901|Solid",
+            "64|Gd|Gadolinium|3|0|6|157.25|1.20|7.90|1585|3546|[Xe] 4f7 5d1 6s2|1880|Solid",
+            "65|Tb|Terbium|3|0|6|158.925354|1.2|8.23|1629|3396|[Xe] 4f9 6s2|1843|Solid",
+            "66|Dy|Dysprosium|3|0|6|162.500|1.22|8.540|1680|2840|[Xe] 4f10 6s2|1886|Solid",
+            "67|Ho|Holmium|3|0|6|164.930328|1.23|8.79|1734|2873|[Xe] 4f11 6s2|1878|Solid",
+            "68|Er|Erbium|3|0|6|167.259|1.24|9.066|1802|3141|[Xe] 4f12 6s2|1843|Solid",
+            "69|Tm|Thulium|3|0|6|168.934218|1.25|9.32|1818|2223|[Xe] 4f13 6s2|1879|Solid",
+            "70|Yb|Ytterbium|3|0|6|173.045|1.1|6.90|1097|1469|[Xe] 4f14 6s2|1878|Solid",
+            "71|Lu|Lutetium|3|0|6|174.9668|1.27|9.841|1925|3675|[Xe] 4f14 5d1 6s2|1907|Solid",
+            "72|Hf|Hafnium|5|4|6|178.486|1.3|13.31|2506|4876|[Xe] 4f14 5d2 6s2|1923|Solid",
+            "73|Ta|Tantalum|5|5|6|180.94788|1.5|16.69|3290|5731|[Xe] 4f14 5d3 6s2|1802|Solid",
+            "74|W|Tungsten|5|6|6|183.84|2.36|19.25|3695|6203|[Xe] 4f14 5d4 6s2|1783|Solid",
+            "75|Re|Rhenium|5|7|6|186.207|1.9|21.02|3459|5869|[Xe] 4f14 5d5 6s2|1925|Solid",
+            "76|Os|Osmium|5|8|6|190.23|2.2|22.59|3306|5285|[Xe] 4f14 5d6 6s2|1803|Solid",
+            "77|Ir|Iridium|5|9|6|192.217|2.20|22.56|2719|4403|[Xe] 4f14 5d7 6s2|1803|Solid",
+            "78|Pt|Platinum|5|10|6|195.084|2.28|21.45|2041.4|4098|[Xe] 4f14 5d9 6s1|1735|Solid",
+            "79|Au|Gold|5|11|6|196.966570|2.54|19.3|1337.33|3243|[Xe] 4f14 5d10 6s1|Ancient|Solid",
+            "80|Hg|Mercury|5|12|6|200.592|2.00|13.534|234.3210|629.88|[Xe] 4f14 5d10 6s2|Ancient|Liquid",
+            "81|Tl|Thallium|6|13|6|204.38|1.62|11.85|577|1746|[Xe] 4f14 5d10 6s2 6p1|1861|Solid",
+            "82|Pb|Lead|6|14|6|207.2|2.33|11.34|600.61|2022|[Xe] 4f14 5d10 6s2 6p2|Ancient|Solid",
+            "83|Bi|Bismuth|6|15|6|208.98040|2.02|9.78|544.7|1837|[Xe] 4f14 5d10 6s2 6p3|1753|Solid",
+            "84|Po|Polonium|6|16|6|209|2.0|9.196|527|1235|[Xe] 4f14 5d10 6s2 6p4|1898|Solid",
+            "85|At|Astatine|9|17|6|210|2.2|6.4|575|610|[Xe] 4f14 5d10 6s2 6p5|1940|Solid",
+            "86|Rn|Radon|10|18|6|222|2.2|0.00973|202|211.5|[Xe] 4f14 5d10 6s2 6p6|1899|Gas",
+            "87|Fr|Francium|1|1|7|223|0.79|1.87|300|950|[Rn] 7s1|1939|Solid",
+            "88|Ra|Radium|2|2|7|226|0.9|5.5|973|2010|[Rn] 7s2|1898|Solid",
+            "89|Ac|Actinium|4|3|7|227|1.1|10.07|1323|3471|[Rn] 6d1 7s2|1899|Solid",
+            "90|Th|Thorium|4|0|7|232.0377|1.3|11.72|2023|5061|[Rn] 6d2 7s2|1829|Solid",
+            "91|Pa|Protactinium|4|0|7|231.03588|1.5|15.37|1841|4300|[Rn] 5f2 6d1 7s2|1913|Solid",
+            "92|U|Uranium|4|0|7|238.02891|1.38|19.1|1405.3|4404|[Rn] 5f3 6d1 7s2|1789|Solid",
+            "93|Np|Neptunium|4|0|7|237|1.36|20.45|912|4447|[Rn] 5f4 6d1 7s2|1940|Solid",
+            "94|Pu|Plutonium|4|0|7|244|1.28|19.85|912.5|3505|[Rn] 5f6 7s2|1940|Solid",
+            "95|Am|Americium|4|0|7|243|1.13|12|1449|2880|[Rn] 5f7 7s2|1944|Solid",
+            "96|Cm|Curium|4|0|7|247|1.28|13.51|1613|3383|[Rn] 5f7 6d1 7s2|1944|Solid",
+            "97|Bk|Berkelium|4|0|7|247|1.3|14.78|1259|2900|[Rn] 5f9 7s2|1949|Solid",
+            "98|Cf|Californium|4|0|7|251|1.3|15.1|1173|1743|[Rn] 5f10 7s2|1950|Solid",
+            "99|Es|Einsteinium|4|0|7|252|1.3|8.84|1133|1269|[Rn] 5f11 7s2|1952|Solid",
+            "100|Fm|Fermium|4|0|7|257|1.3||1800||[Rn] 5f12 7s2|1952|Solid",
+            "101|Md|Mendelevium|4|0|7|258|1.3||1100||[Rn] 5f13 7s2|1955|Solid",
+            "102|No|Nobelium|4|0|7|259|1.3||1100||[Rn] 5f14 7s2|1966|Solid",
+            "103|Lr|Lawrencium|4|0|7|266|1.3||1900||[Rn] 5f14 7s2 7p1|1961|Solid",
+            "104|Rf|Rutherfordium|11|4|7|267|||||[Rn] 5f14 6d2 7s2|1964|",
+            "105|Db|Dubnium|11|5|7|268|||||[Rn] 5f14 6d3 7s2|1967|",
+            "106|Sg|Seaborgium|11|6|7|269|||||[Rn] 5f14 6d4 7s2|1974|",
+            "107|Bh|Bohrium|11|7|7|270|||||[Rn] 5f14 6d5 7s2|1981|",
+            "108|Hs|Hassium|11|8|7|269|||||[Rn] 5f14 6d6 7s2|1984|",
+            "109|Mt|Meitnerium|11|9|7|278|||||[Rn] 5f14 6d7 7s2|1982|",
+            "110|Ds|Darmstadtium|11|10|7|281|||||[Rn] 5f14 6d8 7s2|1994|",
+            "111|Rg|Roentgenium|11|11|7|282|||||[Rn] 5f14 6d9 7s2|1994|",
+            "112|Cn|Copernicium|11|12|7|285|||||[Rn] 5f14 6d10 7s2|1996|",
+            "113|Nh|Nihonium|11|13|7|286|||||[Rn] 5f14 6d10 7s2 7p1|2004|",
+            "114|Fl|Flerovium|11|14|7|289|||||[Rn] 5f14 6d10 7s2 7p2|1999|",
+            "115|Mc|Moscovium|11|15|7|290|||||[Rn] 5f14 6d10 7s2 7p3|2003|",
+            "116|Lv|Livermorium|11|16|7|293|||||[Rn] 5f14 6d10 7s2 7p4|2000|",
+            "117|Ts|Tennessine|11|17|7|294|||||[Rn] 5f14 6d10 7s2 7p5|2010|",
+            "118|Og|Oganesson|11|18|7|294|||||[Rn] 5f14 6d10 7s2 7p6|2002|",
+        };
+
+        // name|mass kg|radius km|density g/cm3|gravity m/s2|escape km/s|rotation h|orbit d|semi-major AU|eccentricity|inclination deg|axial tilt deg|mean temperature K|moons
+        static readonly string[] Planets =
+        {
+            "Mercury|3.3011e23|2439.7|5.427|3.7|4.3|1407.6|87.969|0.387098|0.205630|7.005|0.034|440|0",
+            "Venus|4.8675e24|6051.8|5.243|8.87|10.36|-5832.5|224.701|0.723332|0.006772|3.39458|177.36|737|0",
+            "Earth|5.9722e24|6378.137|5.514|9.80665|11.186|23.9345|365.256363|1.000001018|0.0167086|0|23.4392811|288|1",
+            "Mars|6.4171e23|3396.2|3.9335|3.72076|5.027|24.6229|686.980|1.523679|0.0934|1.850|25.19|210|2",
+            "Jupiter|1.8982e27|71492|1.326|24.79|59.5|9.925|4332.59|5.2044|0.0489|1.303|3.13|165|95",
+            "Saturn|5.6834e26|60268|0.687|10.44|35.5|10.656|10759.22|9.5826|0.0565|2.485|26.73|134|146",
+            "Uranus|8.6810e25|25559|1.27|8.69|21.3|-17.24|30688.5|19.19126|0.04717|0.773|97.77|76|28",
+            "Neptune|1.02413e26|24764|1.638|11.15|23.5|16.11|60195|30.07|0.008678|1.770|28.32|72|16",
+            "Pluto|1.303e22|1188.3|1.854|0.62|1.212|-153.2928|90560|39.482|0.2488|17.16|122.53|44|5",
+        };
+
+        public static DataSet Atoms, PlanetSet;
+
+        public static void Register(Calculator c)
+        {
+            var ds = new DataSet { Name = "atom", Names = { "atom", "element" }, Title = "Periodic Table", Category = "Chemistry", Description = "Chemical elements with their physical and chemical properties.", DefaultProperty = "name" };
+            ds.Properties.Add(new DataProperty("number", "Atomic Number") { IsKey = true, Approximate = false });
+            ds.Properties.Add(new DataProperty("symbol", "Symbol", "", true) { IsKey = true });
+            ds.Properties.Add(new DataProperty("name", "Name", "", true) { IsKey = true });
+            ds.Properties.Add(new DataProperty("class", "Classification", "", true));
+            ds.Properties.Add(new DataProperty("group", "Group") { Approximate = false });
+            ds.Properties.Add(new DataProperty("period", "Period") { Approximate = false });
+            ds.Properties.Add(new DataProperty("weight", "Atomic Weight") { Description = "Standard atomic weight, or mass number of the most stable isotope" });
+            ds.Properties.Add(new DataProperty("electronegativity", "Electronegativity (Pauling)"));
+            ds.Properties.Add(new DataProperty("density", "Density", "g/cm^3"));
+            ds.Properties.Add(new DataProperty("melting", "Melting Point", "K"));
+            ds.Properties.Add(new DataProperty("boiling", "Boiling Point", "K"));
+            ds.Properties.Add(new DataProperty("configuration", "Electron Configuration", "", true));
+            ds.Properties.Add(new DataProperty("discovered", "Discovered", "", true));
+            ds.Properties.Add(new DataProperty("phase", "Phase at STP", "", true));
+            ds.Properties.Add(new DataProperty("x_pos", "Column") { Hidden = true, Approximate = false });
+            ds.Properties.Add(new DataProperty("y_pos", "Row") { Hidden = true, Approximate = false });
+            foreach (var line in Elements)
+            {
+                var p = line.Split('|');
+                var o = new DataObject();
+                o.Values["number"] = p[0]; o.Values["symbol"] = p[1]; o.Values["name"] = p[2];
+                int cls = int.Parse(p[3]);
+                o.Values["class"] = ElementClasses[cls];
+                o.Values["class_id"] = p[3];
+                int z = int.Parse(p[0]);
+                int group = int.Parse(p[4]);
+                int period = int.Parse(p[5]);
+                if (group > 0) o.Values["group"] = p[4];
+                o.Values["period"] = p[5];
+                if (p[6].Length > 0) o.Values["weight"] = p[6];
+                if (p[7].Length > 0) o.Values["electronegativity"] = p[7];
+                if (p[8].Length > 0) o.Values["density"] = p[8];
+                if (p[9].Length > 0) o.Values["melting"] = p[9];
+                if (p[10].Length > 0) o.Values["boiling"] = p[10];
+                o.Values["configuration"] = p[11];
+                o.Values["discovered"] = p[12];
+                if (p[13].Length > 0) o.Values["phase"] = p[13];
+                if (z >= 57 && z <= 71) { o.Values["x_pos"] = (z - 57 + 3).ToString(); o.Values["y_pos"] = "9"; }
+                else if (z >= 89 && z <= 103) { o.Values["x_pos"] = (z - 89 + 3).ToString(); o.Values["y_pos"] = "10"; }
+                else { o.Values["x_pos"] = group.ToString(); o.Values["y_pos"] = period.ToString(); }
+                ds.Objects.Add(o);
+            }
+            Atoms = ds;
+            c.DataSets.Add(ds);
+
+            var ps = new DataSet { Name = "planet", Names = { "planet" }, Title = "Planets", Category = "Astronomy", Description = "Planets of the solar system (and Pluto).", DefaultProperty = "name" };
+            ps.Properties.Add(new DataProperty("name", "Name", "", true) { IsKey = true });
+            ps.Properties.Add(new DataProperty("mass", "Mass", "kg"));
+            ps.Properties.Add(new DataProperty("radius", "Equatorial Radius", "km"));
+            ps.Properties.Add(new DataProperty("density", "Mean Density", "g/cm^3"));
+            ps.Properties.Add(new DataProperty("gravity", "Surface Gravity", "m/s^2"));
+            ps.Properties.Add(new DataProperty("escape_velocity", "Escape Velocity", "km/s"));
+            ps.Properties.Add(new DataProperty("rotation", "Sidereal Rotation Period", "h"));
+            ps.Properties.Add(new DataProperty("orbit", "Orbital Period", "d"));
+            ps.Properties.Add(new DataProperty("distance", "Semi-major Axis", "au"));
+            ps.Properties.Add(new DataProperty("eccentricity", "Orbital Eccentricity"));
+            ps.Properties.Add(new DataProperty("inclination", "Orbital Inclination", "°"));
+            ps.Properties.Add(new DataProperty("tilt", "Axial Tilt", "°"));
+            ps.Properties.Add(new DataProperty("temperature", "Mean Temperature", "K"));
+            ps.Properties.Add(new DataProperty("moons", "Known Moons") { Approximate = false });
+            string[] keys = { "name", "mass", "radius", "density", "gravity", "escape_velocity", "rotation", "orbit", "distance", "eccentricity", "inclination", "tilt", "temperature", "moons" };
+            foreach (var line in Planets)
+            {
+                var p = line.Split('|');
+                var o = new DataObject();
+                for (int i = 0; i < keys.Length; i++) o.Values[keys[i]] = p[i];
+                ps.Objects.Add(o);
+            }
+            PlanetSet = ps;
+            c.DataSets.Add(ps);
+        }
+
+        public static string ObjectName(Expr e)
+        {
+            switch (e)
+            {
+                case StrE s: return s.S;
+                case SymE sy: return sy.Name;
+                case VarE v: return v.V.Names[0];
+                case UnitE u: return (u.P?.Symbol ?? "") + u.U.Abbrev;
+                case NumE n: return Formatter.PlainText(n);
+                case MulE m: return string.Concat(m.Factors.Select(ObjectName));
+                case CallE ce when ce.Args.Count == 0: return ce.F.Names[0];
+            }
+            return Formatter.PlainText(e);
+        }
+
+        public static Expr Value(Calculator c, DataSet ds, DataObject o, DataProperty p)
+        {
+            var v = o.Get(p.Name);
+            if (v == null) throw new CalcException("No value for " + p.Title.ToLowerInvariant());
+            if (p.IsText) return new StrE(v);
+            Expr num;
+            try { num = Parser.ParseText(v, c); }
+            catch (CalcException) { return new StrE(v); }
+            var save = c.ExactPhase;
+            try
+            {
+                c.ExactPhase = true;
+                num = c.Ev.Eval(num);
+            }
+            finally { c.ExactPhase = save; }
+            if (p.Approximate && num is NumE nn) num = new NumE(nn.V.AsApprox());
+            if (!string.IsNullOrEmpty(p.Unit))
+            {
+                var u = c.Ev.Eval(Parser.ParseText(p.Unit, c));
+                num = Simp.Mul(num, u);
+            }
+            return num;
+        }
+
+        public static Expr Lookup(Calculator c, string set, Expr obj, string prop)
+        {
+            var ds = c.FindDataSet(set) ?? throw new CalcException("Unknown data set " + set);
+            string key = ObjectName(obj);
+            var o = ds.Find(key);
+            if (o == null && obj is NumE n && n.V.IsInt) o = ds.Objects.FirstOrDefault(x => x.Get("number") == n.V.Re.N.ToString());
+            if (o == null) throw new CalcException("\"" + key + "\" was not found in " + ds.DisplayTitle.ToLowerInvariant());
+            if (string.IsNullOrEmpty(prop))
+            {
+                var sb = new StringBuilder();
+                foreach (var p in ds.Properties.Where(x => !x.Hidden))
+                {
+                    var v = o.Get(p.Name);
+                    if (v == null) continue;
+                    if (sb.Length > 0) sb.Append("; ");
+                    sb.Append(p.Title).Append(": ").Append(v).Append(string.IsNullOrEmpty(p.Unit) ? "" : " " + p.Unit.Replace("^3", "³").Replace("^2", "²"));
+                }
+                return new StrE(sb.ToString());
+            }
+            var dp = ds.Prop(prop) ?? ds.Properties.FirstOrDefault(x => x.Title.ToLowerInvariant().Contains(prop.ToLowerInvariant()));
+            if (dp == null) throw new CalcException("Unknown property \"" + prop + "\"");
+            return Value(c, ds, o, dp);
+        }
+    }
+}
