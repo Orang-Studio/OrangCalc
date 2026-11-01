@@ -2,14 +2,13 @@
 
 # OrangCalc
 
-**A dark, precise calculator for Windows and Linux** - arithmetic, symbolic algebra, units,
+**A dark, precise calculator for Linux** - arithmetic, symbolic algebra, units,
 currencies, plotting, data sets and a periodic table, all in one desktop app.
 
 ![image](image.png)
 
 ![Version](https://img.shields.io/badge/version-4.0-orange)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue)
-![.NET](https://img.shields.io/badge/.NET%20Framework-4.8-purple)
 
 Made with love ❤️
 
@@ -55,9 +54,6 @@ Made with love ❤️
 ## Download & run
 
 Grab the latest build from the [**Releases**](https://github.com/Orang-Studio/OrangCalc/releases) page
-(requires **Windows** with the **.NET Framework 4.8** runtime), or build it yourself:
-
-Linux will be soon!
 
 ## License
 

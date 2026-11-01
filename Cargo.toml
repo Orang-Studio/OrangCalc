@@ -1,0 +1,23 @@
+[package]
+name = "orangcalc"
+version = "4.0.0"
+edition = "2021"
+license = "GPL-3.0"
+description = "A dark, precise calculator"
+
+[dependencies]
+gtk = { package = "gtk4", version = "0.11", features = ["v4_12"] }
+num-bigint = "0.4"
+num-integer = "0.1"
+num-traits = "0.2"
+regex = "1"
+chrono = "0.4"
+roxmltree = "0.20"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[profile.dev]
+opt-level = 1
