@@ -57,8 +57,4 @@ Made with love ❤️
 Grab the latest build from the [**Releases**](https://github.com/Orang-Studio/OrangCalc/releases) page
 (requires **Windows** with the **.NET Framework 4.8** runtime), or build it yourself:
 
-Linux will be soon!
-
-## License
-
-Released under the [**GNU GPL v3**](LICENSE) © Orang Studio.
+Linux is on other branch of this repo
